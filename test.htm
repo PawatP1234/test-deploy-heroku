@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="st.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h2>รายชื่อ</h2>
+
+<input type="text" id="myInput" onkeyup="search();" placeholder="Search..." title="Type in keyword">
+<table id="myTable">
+  <tr class="header">
+    <th style="width:10%;">ลำดับที่</th>
+    <th style="width:30%;">เลขประจำตัวประชาชน</th>
+    <th style="width:20%;">คำนำหน้า</th>
+    <th style="width:20%;">ชื่อเล่น</th>
+    <th style="width:20%;">ชื่อจริง</th>
+  </tr>
+</table>
+<p></p>
+<button onclick="calltable2(1);">1</button>
+<button onclick="calltable2(2);">2</button>
+<button onclick="calltable2(3);">3</button>
+<button onclick="calltable2(4);">4</button>
+<script>
+var no = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"];
+var cityNo = ["11313","12334","12341","15231","13412","14155","17654","15541","15471","16698","17844","15544","13366","15448","15664","19988","12255","12778","19665","18225"];
+var se = ["นาย","นาย","นางสาว","นางสาว","นาย","นางสาว","นาย","นาย","นางสาว","นาย","นางสาว","นางสาว","นาย","นาย","นาย","นางสาว","นาย","นางสาว","นางสาว","นาย"];
+var nickname = ["เมล","เล่","เพ้น","กี้","เพชร","มีน","ก้อง","เนป","พิม","ไจ๋","ตุ๊กตา","วุ้น","โอ๊ต","โค้ก","ไบร์ท","ฝ้าย","เขื่อน","กาน","อาย","เจม"];
+var name2 = ["ภวัต","พัชระ","พัชรัช","วัชนันท์","เลิศวุฒิ","ปานิศา","กรวิช","อภินันต์","วารี","อภินันต์","อารยา","ลักขณา","ณัธชัย","พงศกร","ศิวกร","พิรุณ","ภาวิดา","วรรณ์พญา","ภัสสราวรรณ","อภิสิทธิ์"]
+function calltable(k){
+    var table = document.getElementById("myTable");
+    var i;
+    var j = k - 1;
+    j = j * 5;
+    for (i = 0; i < 5; i++) {
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        cell1.innerHTML = no[j];
+        cell2.innerHTML = cityNo[j];
+        cell3.innerHTML = se[j];
+        cell4.innerHTML = nickname[j];
+        cell5.innerHTML = name2[j];
+        j++;
+    }
+}
+function calltable2(k){
+    var rows = document.getElementById("myTable").getElementsByTagName("tr").length;
+    for (i = 0; i < rows - 1; i++) {
+        deleterow("myTable");
+    }
+    var table = document.getElementById("myTable");
+    var i;
+    var j = k - 1;
+    j = j * 5;
+    
+    for (i = 0; i < 5; i++) {
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        cell1.innerHTML = no[j];
+        cell2.innerHTML = cityNo[j];
+        cell3.innerHTML = se[j];
+        cell4.innerHTML = nickname[j];
+        cell5.innerHTML = name2[j];
+        j++;
+    }
+}
+function deleterow(tableID) {
+    var table = document.getElementById(tableID);
+    var rowCount = table.rows.length;
+    table.deleteRow(rowCount -1);
+}
+document.getElementById("eiei").innerHTML = calltable(1);
+function search() {
+  var input, filter;
+  var temp1 = []
+  var temp2 = []
+  var temp3 = []
+  var temp4 = []
+  var temp5 = []
+  var input = document.getElementById("myInput");
+  var filter = input.value.toUpperCase();
+  var length = no.length;
+  for(i = 0; i < length; i++){
+      if(no[i].indexOf(filter) > -1 || cityNo[i].indexOf(filter) > -1 || nickname[i].indexOf(filter) > -1 || name2[i].indexOf(filter) > -1){
+          temp1.push(no[i]);
+          temp2.push(cityNo[i]);
+          temp3.push(se[i]);
+          temp4.push(nickname[i]);
+          temp5.push(name2[i]);
+      }
+  }
+  newTable(temp1,temp2,temp3,temp4,temp5);
+}
+function newTable(a,b,c,d,e){
+    var i;
+    var rows = document.getElementById("myTable").getElementsByTagName("tr").length;
+    for (i = 0; i < rows - 1; i++) {
+        deleterow("myTable");
+    }
+    var table = document.getElementById("myTable");
+    var len = a.length;
+    if(len > 5){
+        for(i = 0; i < 5; i++){
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            cell1.innerHTML = a[0];
+            cell2.innerHTML = b[0];
+            cell3.innerHTML = c[0];
+            cell4.innerHTML = d[0];
+            cell5.innerHTML = e[0];
+            a.shift();
+            b.shift();
+            c.shift();
+            d.shift();
+            e.shift();
+        }
+        len = len - 5;
+        if(len > 0){
+//           newTable(a,b,c,d,e);
+        }
+    }
+    else if(len > 0 && len <= 5){
+        for(i = 0; i < len; i++){
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            cell1.innerHTML = a[0];
+            cell2.innerHTML = b[0];
+            cell3.innerHTML = c[0];
+            cell4.innerHTML = d[0];
+            cell5.innerHTML = e[0];
+            a.shift();
+            b.shift();
+            c.shift();
+            d.shift();
+            e.shift();
+        }
+    }
+}
+</script>
+
+</body>
+</html>
